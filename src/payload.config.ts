@@ -3,10 +3,11 @@ import path from "path";
 // import { payloadCloud } from "@payloadcms/plugin-cloud";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
-import { slateEditor } from "@payloadcms/richtext-slate";
 import { buildConfig } from "payload/config";
+import { slateEditor } from "@payloadcms/richtext-slate";
 
 import Users from "./collections/Users";
+import Articles from "./collections/Articles";
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_EXTERNAL_SERVER_URL,
@@ -15,7 +16,7 @@ export default buildConfig({
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users],
+  collections: [Users, Articles],
   typescript: {
     outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
