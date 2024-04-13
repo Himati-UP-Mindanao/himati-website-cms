@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload/types";
 import { slateEditor } from "@payloadcms/richtext-slate";
+import { v4 as uuidv4 } from "uuid";
 
 // Access Control
 import { isAdminField } from "../access/isAdmin";
@@ -19,15 +20,21 @@ const Articles: CollectionConfig = {
     delete: isAdminOrAuthor,
   },
   versions: {
-    drafts: {
-      autosave: true,
-    },
+    drafts: true,
   },
   fields: [
     {
       name: "id",
       type: "text",
-      hidden: true,
+      access: {
+        update: () => false,
+      },
+      hooks: {
+        beforeValidate: [() => uuidv4()],
+      },
+      admin: {
+        condition: () => false,
+      },
     },
     {
       name: "title",
