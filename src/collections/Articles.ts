@@ -16,6 +16,7 @@ const Articles: CollectionConfig = {
   access: {
     create: isWriter,
     read: isPublished,
+    // read: () => true,
     update: isAdminOrAuthor,
     delete: isAdminOrAuthor,
   },
@@ -46,7 +47,7 @@ const Articles: CollectionConfig = {
       name: "author",
       label: "Author",
       type: "relationship",
-      relationTo: "users",
+      relationTo: "himati-staff",
       required: true,
       defaultValue: ({ user }) => user.id,
       access: {
@@ -120,26 +121,17 @@ const Articles: CollectionConfig = {
       type: "checkbox",
       defaultValue: false,
     },
-    // {
-    //   type: "row",
-    //   fields: [
-    //     {
-    //       name: "photo",
-    //       type: "upload",
-    //       relationTo: "images",
-    //       required: true,
-    //     },
-    //     {
-    //       name: "caption",
-    //       type: "text",
-    //     },
-    //   ],
-    //   admin: {
-    //     condition: (data) => {
-    //       return data["include-featured-photo"];
-    //     },
-    //   },
-    // },
+    {
+      name: "photo",
+      type: "upload",
+      relationTo: "featured-photo",
+      required: true,
+      admin: {
+        condition: (data) => {
+          return data["include-featured-photo"];
+        },
+      },
+    },
     {
       name: "tags",
       label: "Tags",
