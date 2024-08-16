@@ -26,6 +26,9 @@ const adapter = s3Adapter({
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_EXTERNAL_SERVER_URL,
+  rateLimit: {
+    trustProxy: true,
+  },
   admin: {
     user: HimatiStaff.slug,
     bundler: webpackBundler(),
