@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload/types";
 import { slateEditor } from "@payloadcms/richtext-slate";
+import { v4 as uuidv4 } from "uuid";
 
 // Access Control
 import { isAdminField } from "../access/isAdmin";
@@ -15,19 +16,26 @@ const Articles: CollectionConfig = {
   access: {
     create: isWriter,
     read: isPublished,
+    // read: () => true,
     update: isAdminOrAuthor,
     delete: isAdminOrAuthor,
   },
   versions: {
-    drafts: {
-      autosave: true,
-    },
+    drafts: true,
   },
   fields: [
     {
       name: "id",
       type: "text",
-      hidden: true,
+      access: {
+        update: () => false,
+      },
+      hooks: {
+        beforeValidate: [() => uuidv4()],
+      },
+      admin: {
+        condition: () => false,
+      },
     },
     {
       name: "title",
@@ -39,7 +47,7 @@ const Articles: CollectionConfig = {
       name: "author",
       label: "Author",
       type: "relationship",
-      relationTo: "users",
+      relationTo: "himati-staff",
       required: true,
       defaultValue: ({ user }) => user.id,
       access: {
@@ -113,26 +121,17 @@ const Articles: CollectionConfig = {
       type: "checkbox",
       defaultValue: false,
     },
-    // {
-    //   type: "row",
-    //   fields: [
-    //     {
-    //       name: "photo",
-    //       type: "upload",
-    //       relationTo: "images",
-    //       required: true,
-    //     },
-    //     {
-    //       name: "caption",
-    //       type: "text",
-    //     },
-    //   ],
-    //   admin: {
-    //     condition: (data) => {
-    //       return data["include-featured-photo"];
-    //     },
-    //   },
-    // },
+    {
+      name: "photo",
+      type: "upload",
+      relationTo: "featured-photo",
+      required: true,
+      admin: {
+        condition: (data) => {
+          return data["include-featured-photo"];
+        },
+      },
+    },
     {
       name: "tags",
       label: "Tags",
