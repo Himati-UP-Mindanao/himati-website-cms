@@ -29,6 +29,7 @@ export default buildConfig({
   rateLimit: {
     trustProxy: true,
   },
+  csrf: ["https://himati-cms-dev-6a8e9e0378a8.herokuapp.com"],
   admin: {
     user: HimatiStaff.slug,
     bundler: webpackBundler(),
