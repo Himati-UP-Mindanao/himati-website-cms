@@ -1,4 +1,4 @@
-import { Access } from "payload/config";
+import { Access, FieldAccess } from "payload/types";
 import { User } from "../payload-types";
 
 export const isPublished: Access<any, User> = ({ req: { user } }) => {

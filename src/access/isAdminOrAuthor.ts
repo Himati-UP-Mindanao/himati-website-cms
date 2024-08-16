@@ -3,7 +3,7 @@ import { User } from "../payload-types";
 
 export const isAdminOrAuthor: Access<any, User> = ({ req: { user } }) => {
   if (user) {
-    if (user.role === "admin") {
+    if (user.role.includes("admin")) {
       return true;
     }
 

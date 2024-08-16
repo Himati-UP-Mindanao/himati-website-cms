@@ -2,7 +2,7 @@ import { Access } from "payload/config";
 
 export const isAdminOrSelf: Access = ({ req: { user } }) => {
   if (user) {
-    if (user.role === "admin") {
+    if (user.role.includes("admin")) {
       return true;
     }
 
