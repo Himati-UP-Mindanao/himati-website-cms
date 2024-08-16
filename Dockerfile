@@ -19,7 +19,7 @@ ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
 # COPY --from=builder /home/node/app/dist ./dist
 # COPY --from=builder /home/node/app/build ./build
 
-COPY .env .env
+# COPY .env .env
 
 EXPOSE 4000
 
